@@ -1,0 +1,105 @@
+CSS (Cascading Style Sheets)
+
+CSS is used to style HTML webpages. It controls layout, colors, fonts, spacing, and design.
+
+
+Types of CSS
+
+1. Inline CSS
+   Used inside HTML tag
+   Example: <tag style="property: value;"></tag>
+
+2. Internal CSS
+   Written inside <head> section
+   Example:
+
+<style>
+h1 {
+  color: red;
+}
+</style>
+
+3. External CSS
+   Written in separate .css file
+   Example:
+   h1 {
+   color: green;
+   }
+
+---
+
+Basic Structure
+
+selector {
+property: value;
+}
+
+---
+
+Common Properties
+
+Font:
+
+* font-family
+* font-size
+* font-style
+* font-weight
+
+Color & Background:
+
+* color
+* background-color
+* background-image
+
+Text:
+
+* letter-spacing
+* word-spacing
+* text-decoration
+* line-height
+
+Box Model:
+
+* margin
+* padding
+* border
+* width
+* height
+
+---
+
+Examples
+
+Inline CSS:
+
+<table style="width:200px; background-color:black;">
+</table>
+
+Internal CSS:
+
+<html>
+<head>
+<style>
+h1 {
+  color: red;
+}
+</style>
+</head>
+<body>
+<h1>Styled Heading</h1>
+</body>
+</html>
+
+External CSS (mystyle.css):
+h1 {
+color: green;
+font-size: 36px;
+}
+
+---
+
+Summary
+
+* CSS is used for design
+* Three types: Inline, Internal, External
+* External CSS is best for large projects
