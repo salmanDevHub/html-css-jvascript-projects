@@ -1,0 +1,143 @@
+JavaScript Notes
+
+JavaScript is used in millions of web pages to:
+
+* Improve design
+* Validate forms
+* Detect browsers
+* Create cookies
+* And much more
+
+It works in all major browsers: Internet Explorer, Mozilla, Firefox, Netscape, Opera.
+
+---
+
+How to Include JavaScript in HTML
+
+1. Internal Script
+   Use `<script>` and `</script>` tags inside HTML file:
+
+```html
+<script>
+  // JavaScript code here
+</script>
+```
+
+2. External Script
+   Write JavaScript in a separate file and include it using `src` attribute:
+
+```html
+<script src="myscripts.js"></script>
+```
+
+---
+
+Variables in JavaScript
+
+* JavaScript supports: numbers, strings, booleans, null
+* Loosely typed language
+* Declared using `var`, `let`, or `const`
+  Example:
+
+```javascript
+var name = 'Asad';
+```
+
+---
+
+Operators in JavaScript
+
+* **Assignment**: `=`
+* **Arithmetic**: `+`, `-`, `*`, `/`, `%`, `++`, `--`
+* **Logical**: `&&`, `||`, `!`
+* **Comparison**: `==`, `===`, `!=`, `!==`, `<`, `>`, `<=`, `>=`
+
+---
+
+Input / Output
+
+* Document.write() → write on browser
+
+```javascript
+document.write("Hello World");
+document.write(a);
+```
+
+* **prompt()** → take input from user
+
+```javascript
+var num = prompt("Please Enter a Number", 0);
+```
+
+* **alert()** → show alert box
+
+javascript
+alert("Hello!");
+
+
+Functions
+
+```javascript
+function functionName(parameters) {
+  // statements
+}
+```
+
+---
+
+Conditional Statements
+
+* **if statement**
+
+```javascript
+if(condition) {
+  // statements
+}
+```
+
+* **if-else statement**
+
+```javascript
+if(condition) {
+  // statements
+} else {
+  // statements
+}
+
+
+Loops
+
+* **for loop**
+
+javascript
+for(var i=1; i<=10; i++) {
+  document.write("Hello World");
+}
+
+-----
+
+* while loop
+
+javascript
+while(condition) {
+  // statements
+}
+
+----
+
+* **do-while loop**
+
+javascript
+do {
+  // statements
+} while(condition);
+
+-----
+
+Summary
+
+* JavaScript = scripting language for web pages
+* Works with HTML & CSS
+* Used for interactivity, validation, and dynamic content
+
+
