@@ -1,0 +1,39 @@
+DIV Tag (HTML)
+
+The <div> tag is used to define a division or section in an HTML document.
+
+It helps us create containers (sections) that can be styled using CSS.
+
+Syntax:
+
+<div> ... </div>
+
+---
+
+Purpose of <div>
+
+* Used to divide a webpage into sections
+* Helps in creating layout
+* Works with CSS for styling
+* Makes design more organized
+
+---
+
+Page Design Process
+
+1. Determine the requirements of the website
+2. Group related information
+3. Create a site map
+4. Identify key elements for each page
+5. Decide layout (arrangement of content)
+6. Convert the design into code
+
+---
+
+Summary
+
+* <div> is used for structure (sections)  
+* CSS is used for design (styling)
+* Both are used together to build webpage layout
+
+---
