@@ -1,0 +1,98 @@
+JavaScript Timers
+
+Timers allow us to execute a function at a particular time.
+They help delay code execution instead of running immediately.
+
+Use cases:
+
+* Change advertisement banners at regular intervals
+* Display a real-time clock
+* Execute repeated actions on a webpage
+
+---
+
+setTimeout()
+
+* Executes a function **once** after a specified delay (milliseconds)
+* Syntax:
+
+```javascript
+setTimeout(function, delay_in_milliseconds);
+```
+
+* Parameters:
+
+  1. `function` → the function to execute
+  2. `delay` → time in milliseconds (1 second = 1000 ms)
+
+Example:
+
+```javascript
+function greet() {
+  alert("Hello!");
+}
+setTimeout(greet, 2000); // executes after 2 seconds
+```
+
+---
+
+### clearTimeout()
+
+* Stops a timer set with `setTimeout()`
+* Syntax:
+
+```javascript
+id_of_settimeout = setTimeout(greet, 2000);
+clearTimeout(id_of_settimeout);
+```
+
+* Use the ID returned by `setTimeout()` as a parameter for `clearTimeout()`
+
+---
+
+ setInterval()
+
+* Executes a function **repeatedly** at fixed time intervals
+* Continues until `clearInterval()` is called or window is closed
+* Syntax:
+
+```javascript
+setInterval(function, interval_in_milliseconds);
+```
+
+* Parameters:
+
+  1. `function` → the function to execute
+  2. `interval` → time in milliseconds
+
+**Example:**
+
+```javascript
+function showTime() {
+  console.log(new Date());
+}
+setInterval(showTime, 1000); // every 1 second
+```
+
+---
+
+ clearInterval()
+
+* Stops a timer set with `setInterval()`
+* Syntax:
+
+```javascript
+id_of_setinterval = setInterval(showTime, 1000);
+clearInterval(id_of_setinterval);
+```
+
+* Use the ID returned by `setInterval()` as a parameter for `clearInterval()`
+
+---
+
+Summary:
+
+* `setTimeout()` → run once after delay
+* `setInterval()` → run repeatedly at intervals
+* `clearTimeout()` → cancel a single delayed execution
+* `clearInterval()` → cancel repeated execution
