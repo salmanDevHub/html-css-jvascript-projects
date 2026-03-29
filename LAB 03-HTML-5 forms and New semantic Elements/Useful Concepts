@@ -1,0 +1,67 @@
+## HTML Forms
+
+HTML forms are used to send data to a server.
+
+## Form Tag
+
+html
+<form action="url" method="get">
+</form>
+
+
+ ## Attributes
+
+* **action** → where to send data
+* **method="get"** → data goes in URL
+* **method="post"** → data goes in body
+* **target** → where to show result
+
+
+## Input Types
+
+### Text
+
+```html
+<input type="text">
+```
+
+### Password
+
+`html
+<input type="password">
+
+
+### Textarea
+
+html
+<textarea></textarea>
+
+
+
+## Buttons
+
+html
+<input type="submit">
+<input type="reset">
+<input type="button">
+
+
+HTML5 Features
+
+## Attributes
+
+* `required`
+* `pattern`
+* `readonly`
+* `disabled`
+* `autocomplete`
+
+
+## New Inputs
+
+html
+<input type="email">
+<input type="date">
+<input type="color">
+<input type="number">
+
