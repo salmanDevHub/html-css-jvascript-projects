@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PakBazaar — Pakistan's Biggest Online Marketplace</title>
+  <link href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div id="lbar"></div>
+<div id="toast-wrap"></div>
+
+<!-- ════════════════════════════════════════════
+     SETTINGS MODAL
+════════════════════════════════════════════ -->
+<div class="modal-overlay" id="settingsModal">
+  <div class="modal">
+    <div class="modal-hd">
+      <h3>⚙️ Settings</h3>
+      <button class="modal-x" onclick="closeModal('settingsModal')">✕</button>
+    </div>
+    <div class="setting-sec">
+      <h4>Theme</h4>
+      <div class="theme-picks">
+        <div class="tpick on" data-theme="light" onclick="setTheme('light',this)"><div class="swatch" style="background:#f8f9fa;border:2px solid #c3e703"></div>☀️ Light</div>
+        <div class="tpick" data-theme="dark"  onclick="setTheme('dark',this)"><div class="swatch" style="background:#111;border:2px solid #c3e703"></div>🌙 Dark</div>
+        <div class="tpick" data-theme="teal"  onclick="setTheme('teal',this)"><div class="swatch" style="background:#0d1a18;border:2px solid #96d1c7"></div>🌊 Teal</div>
+        <div class="tpick" data-theme="warm"  onclick="setTheme('warm',this)"><div class="swatch" style="background:#1a0d00;border:2px solid #f59e0b"></div>🔥 Warm</div>
+      </div>
+    </div>
+    <div class="setting-sec">
+      <h4>Preferences</h4>
+      <div class="tog-row"><div class="tog-info"><span>Featured Listings First</span><p>Show featured ads at the top</p></div><button class="toggle on" onclick="this.classList.toggle('on')"></button></div>
+      <div class="tog-row"><div class="tog-info"><span>Push Notifications</span><p>Alerts for new ads &amp; messages</p></div><button class="toggle on" onclick="this.classList.toggle('on')"></button></div>
+      <div class="tog-row"><div class="tog-info"><span>Email Alerts</span><p>Updates on saved searches</p></div><button class="toggle" onclick="this.classList.toggle('on')"></button></div>
+      <div class="tog-row"><div class="tog-info"><span>Show Seller Phone</span><p>Display seller phone on listings</p></div><button class="toggle on" onclick="this.classList.toggle('on')"></button></div>
+    </div>
+    <div class="setting-sec">
+      <h4>Language &amp; Region</h4>
+      <div class="form-r2" style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+        <div class="fgrp"><label class="fgrp label">Language</label><select class="finp"><option>English</option><option>اردو</option></select></div>
+        <div class="fgrp"><label class="fgrp label">Currency</label><select class="finp"><option>PKR (Rs.)</option><option>USD ($)</option></select></div>
+      </div>
+    </div>
+    <button class="btn-save-settings" onclick="saveSettings()">Save Changes</button>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     LOGIN / REGISTER MODAL
+════════════════════════════════════════════ -->
+<div class="modal-overlay" id="loginModal">
+  <div class="modal" style="max-width:460px;width:100%">
+    <div class="modal-hd">
+      <h3 id="loginModalTitle">Welcome to PakBazaar 👋</h3>
+      <button class="modal-x" onclick="closeModal('loginModal')">✕</button>
+    </div>
+
+    <!-- TABS -->
+    <div class="login-tabs">
+      <button class="ltab on" onclick="switchLoginTab('login',this)">Sign In</button>
+      <button class="ltab" onclick="switchLoginTab('register',this)">Create Account</button>
+    </div>
+
+    <!-- ── SIGN IN FORM ── -->
+    <div id="loginFormBody">
+      <div class="fgrp" style="margin-bottom:14px">
+        <label style="font-size:13px;font-weight:600;color:var(--text2);display:block;margin-bottom:5px">Email / Phone Number</label>
+        <input type="text" id="loginEmail" class="finp" placeholder="Enter your email or phone">
+      </div>
+      <div class="fgrp" style="margin-bottom:16px">
+        <label style="font-size:13px;font-weight:600;color:var(--text2);display:block;margin-bottom:5px">Password</label>
+        <div style="position:relative">
+          <input type="password" id="loginPass" class="finp" placeholder="Enter your password" style="padding-right:44px">
+          <button onclick="togglePassVis('loginPass',this)" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--text3);cursor:pointer;font-size:15px"><i class="fas fa-eye"></i></button>
+        </div>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;font-size:13px">
+        <label style="display:flex;align-items:center;gap:6px;cursor:pointer">
+          <input type="checkbox" style="accent-color:var(--lime-dark)"> Remember me
+        </label>
+        <a href="#" style="color:var(--lime-dark);font-weight:600;text-decoration:none" onclick="toast('Password reset link sent!','inf')">Forgot password?</a>
+      </div>
+      <button class="btn-login-sub" onclick="doLogin()">
+        <i class="fas fa-sign-in-alt" style="margin-right:8px"></i>Sign In
+      </button>
+      <div class="divider">or continue with</div>
+      <div class="social-login">
+        <button class="soc-btn" onclick="toast('Google login coming soon','inf')"><i class="fab fa-google" style="color:#ea4335"></i> Google</button>
+        <button class="soc-btn" onclick="toast('Facebook login coming soon','inf')"><i class="fab fa-facebook" style="color:#1877f2"></i> Facebook</button>
+      </div>
+      <p style="text-align:center;margin-top:16px;font-size:13px;color:var(--text3)">
+        New here? <a href="#" style="color:var(--lime-dark);font-weight:700;text-decoration:none" onclick="document.querySelectorAll('.ltab')[1].click()">Create a free account →</a>
+      </p>
+    </div>
+
+    <!-- ── REGISTER FORM ── -->
+    <div id="registerFormBody" style="display:none">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px">
+        <div class="fgrp">
+          <label style="font-size:13px;font-weight:600;color:var(--text2);display:block;margin-bottom:5px">First Name *</label>
+          <input type="text" id="regFname" class="finp" placeholder="First name">
+        </div>
+        <div class="fgrp">
+          <label style="font-size:13px;font-weight:600;color:var(--text2);display:block;margin-bottom:5px">Last Name</label>
+          <input type="text" id="regLname" class="finp" placeholder="Last name">
+        </div>
+      </div>
+      <div class="fgrp" style="margin-bottom:12px">
+        <label style="font-size:13px;font-weight:600;color:var(--text2);display:block;margin-bottom:5px">Email Address *</label>
+        <input type="email" id="regEmail" class="finp" placeholder="your@email.com">
+      </div>
+      <div class="fgrp" style="margin-bottom:12px">
+        <label style="font-size:13px;font-weight:600;color:var(--text2);display:block;margin-bottom:5px">Phone Number *</label>
+        <input type="tel" id="regPhone" class="finp" placeholder="03XX-XXXXXXX">
+      </div>
+      <div class="fgrp" style="margin-bottom:12px">
+        <label style="font-size:13px;font-weight:600;color:var(--text2);display:block;margin-bottom:5px">Password * <small style="color:var(--text3)">(min 6 characters)</small></label>
+        <div style="position:relative">
+          <input type="password" id="regPass" class="finp" placeholder="Create a strong password" style="padding-right:44px">
+          <button onclick="togglePassVis('regPass',this)" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--text3);cursor:pointer;font-size:15px"><i class="fas fa-eye"></i></button>
+        </div>
+      </div>
+      <div class="fgrp" style="margin-bottom:20px">
+        <label style="font-size:13px;font-weight:600;color:var(--text2);display:block;margin-bottom:5px">Confirm Password *</label>
+        <input type="password" id="regPass2" class="finp" placeholder="Re-enter password">
+      </div>
+      <div style="background:rgba(195,231,3,0.08);border:1px solid rgba(195,231,3,0.25);border-radius:var(--r-sm);padding:12px;margin-bottom:16px;font-size:12px;color:var(--text2)">
+        <i class="fas fa-shield-alt" style="color:var(--lime-dark);margin-right:6px"></i>
+        Your data is safe. We never share personal info with third parties.
+      </div>
+      <button class="btn-login-sub" onclick="doRegister()">
+        <i class="fas fa-user-plus" style="margin-right:8px"></i>Create Free Account
+      </button>
+      <p style="text-align:center;margin-top:14px;font-size:13px;color:var(--text3)">
+        Already have an account? <a href="#" style="color:var(--lime-dark);font-weight:700;text-decoration:none" onclick="document.querySelectorAll('.ltab')[0].click()">Sign In →</a>
+      </p>
+    </div>
+
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     CART PANEL
+════════════════════════════════════════════ -->
+<div class="cart-bg" id="cartBg"></div>
+<div class="cart-panel" id="cartPanel">
+  <div class="cart-hd">
+    <h3>🛒 Cart (<span id="cCount">0</span>)</h3>
+    <button class="modal-x" onclick="toggleCart()">✕</button>
+  </div>
+  <div class="cart-body" id="cartBody"></div>
+  <div class="cart-ft">
+    <div class="cart-total-row">
+      <span>Total</span>
+      <strong id="cartTotal">Rs. 0</strong>
+    </div>
+    <button class="btn-checkout" onclick="toast('Checkout coming soon! 🎉','inf');toggleCart()">Proceed to Checkout →</button>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     TOP BAR
+════════════════════════════════════════════ -->
+<div class="topbar">
+  <div class="wrap">
+    <div class="topbar-left">
+      <i class="fas fa-truck" style="color:var(--lime)"></i>&nbsp;
+      Free delivery on orders over Rs. 3,000
+      <span class="topbar-pill">NEW</span>
+    </div>
+    <div class="topbar-right">
+      <a href="#"><i class="fas fa-map-marker-alt"></i> Lahore</a>
+      <a href="#"><i class="fas fa-phone"></i> 03055404272</a>
+      <a href="#" onclick="openModal('settingsModal')"><i class="fas fa-globe"></i> EN · PKR</a>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     HEADER
+════════════════════════════════════════════ -->
+<header>
+  <div class="wrap">
+    <div class="header-inner">
+
+      <!-- Logo -->
+      <a class="logo" href="#" onclick="navGo(document.querySelectorAll('.nitem')[0],'home')">
+        <span class="logo-pak">Pak</span><span class="logo-baz">Bazaar</span>
+      </a>
+
+      <!-- Search -->
+      <div class="search-bar">
+        <select class="search-cat" onchange="updateSearchPlaceholder(this)">
+          <option>All</option>
+          <option>Cars</option>
+          <option>Bikes</option>
+          <option>Electronics</option>
+          <option>Fashion</option>
+          <option>Property</option>
+          <option>Grocery</option>
+        </select>
+        <input type="text" class="search-inp" id="mainSearch" placeholder="Search cars, bikes, phones, fashion...">
+        <button class="search-btn" onclick="doSearch()">
+          <i class="fas fa-search"></i> Search
+        </button>
+      </div>
+
+      <!-- Actions -->
+      <div class="hdr-actions">
+        <button class="hbtn" onclick="toggleCart()" title="Cart">
+          <i class="fas fa-shopping-cart"></i>
+          <span class="hbdg" id="cBadge">0</span>
+        </button>
+        <button class="hbtn" onclick="toast('Wishlist: 0 items','inf')" title="Wishlist">
+          <i class="far fa-heart"></i>
+        </button>
+        <button class="hbtn" onclick="toast('No new messages','inf')" title="Messages">
+          <i class="far fa-comment-dots"></i>
+        </button>
+        <button class="hbtn" onclick="openModal('settingsModal')" title="Settings">
+          <i class="fas fa-cog"></i>
+        </button>
+
+        <!-- Login Button (shown when logged out) -->
+        <button class="btn-login" id="headerLoginBtn" onclick="openModal('loginModal')">
+          <i class="fas fa-user" style="margin-right:5px"></i>Login
+        </button>
+
+        <!-- User Chip (shown when logged in) -->
+        <div class="user-chip" id="headerUserChip" onclick="navGo(document.querySelectorAll('.nitem')[11],'profile')">
+          <div class="user-av" id="headerUserAv">?</div>
+          <span class="user-name" id="headerUserName">User</span>
+          <i class="fas fa-chevron-down" style="font-size:10px;color:var(--text3)"></i>
+        </div>
+
+        <button class="btn-post-ad" onclick="navGo(null,'sell')">
+          <i class="fas fa-plus" style="margin-right:5px"></i>Post Ad
+        </button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ════════════════════════════════════════════
+     NAVIGATION
+════════════════════════════════════════════ -->
+<nav>
+  <div class="wrap">
+    <div class="nav-inner">
+      <a class="nitem active" onclick="navGo(this,'home')"><i class="fas fa-home"></i> Home</a>
+      <a class="nitem" onclick="navGo(this,'cars')"><i class="fas fa-car"></i> Cars</a>
+      <a class="nitem" onclick="navGo(this,'bikes')"><i class="fas fa-motorcycle"></i> Bikes</a>
+      <a class="nitem" onclick="navGo(this,'electronics')"><i class="fas fa-mobile-alt"></i> Electronics</a>
+      <a class="nitem" onclick="navGo(this,'fashion')"><i class="fas fa-tshirt"></i> Fashion</a>
+      <a class="nitem" onclick="navGo(this,'beauty')"><i class="fas fa-spa"></i> Beauty</a>
+      <a class="nitem" onclick="navGo(this,'property')"><i class="fas fa-building"></i> Property</a>
+      <a class="nitem" onclick="navGo(this,'furniture')"><i class="fas fa-couch"></i> Furniture</a>
+      <a class="nitem" onclick="navGo(this,'jobs')"><i class="fas fa-briefcase"></i> Jobs</a>
+      <a class="nitem" onclick="navGo(this,'shop')"><i class="fas fa-shopping-bag"></i> Grocery &amp; Shop</a>
+      <a class="nitem" onclick="navGo(this,'sell')"><i class="fas fa-plus-circle"></i> Post Ad</a>
+      <a class="nitem" onclick="navGo(this,'profile')"><i class="fas fa-user-circle"></i> Account</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ════════════════════════════════════════════
+     PAGE SECTIONS
+════════════════════════════════════════════ -->
+
+<!-- ── HOME ── -->
+<div id="page-home" class="page-sec active fade-up">
+  <div class="wrap">
+    <div class="hero-section">
+      <div class="hero-grid">
+        <div class="hero-main" onclick="navGo(document.querySelectorAll('.nitem')[1],'cars')">
+          <img src="https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=900&h=500&fit=crop" alt="marketplace">
+          <div class="hero-overlay"></div>
+          <div class="hero-content">
+            <div class="hero-tag"><i class="fas fa-bolt"></i> Buy &amp; Sell Anything</div>
+            <h1 class="hero-h1">Pakistan's<br><em>Biggest</em><br>Online Marketplace</h1>
+            <p class="hero-sub">Cars · Bikes · Electronics · Fashion · Grocery — all in one place</p>
+            <div class="hero-btns">
+              <button class="hbtn-solid" onclick="event.stopPropagation();navGo(document.querySelectorAll('.nitem')[1],'cars')">Browse Cars →</button>
+              <button class="hbtn-ghost" onclick="event.stopPropagation();navGo(null,'sell')">+ Post Free Ad</button>
+            </div>
+          </div>
+        </div>
+        <div class="hero-side">
+          <div class="hero-card" onclick="navGo(document.querySelectorAll('.nitem')[4],'fashion')">
+            <img src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?w=500&h=260&fit=crop" alt="fashion">
+            <div class="hero-card-ov"></div>
+            <div class="hero-card-body"><h3>Fashion Sale</h3><p>Up to 50% off today</p><span class="hero-card-badge">Shop Now →</span></div>
+          </div>
+          <div class="hero-card" onclick="navGo(document.querySelectorAll('.nitem')[9],'shop')">
+            <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?w=500&h=260&fit=crop" alt="grocery">
+            <div class="hero-card-ov"></div>
+            <div class="hero-card-body"><h3>Fresh Grocery</h3><p>Vegetables, fruits &amp; more</p><span class="hero-card-badge">Order Now →</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CATEGORY STRIP -->
+  <div class="wrap">
+    <div class="cat-strip">
+      <div class="sec-head" style="margin-bottom:14px"><h2 class="sec-title">Browse <span>Categories</span></h2></div>
+      <div class="cat-scroll">
+        <div class="cat-pill active" onclick="navGo(document.querySelectorAll('.nitem')[1],'cars')"><img src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=80&h=80&fit=crop" alt="cars"><span>Cars</span></div>
+        <div class="cat-pill" onclick="navGo(document.querySelectorAll('.nitem')[2],'bikes')"><img src="https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?w=80&h=80&fit=crop" alt="bikes"><span>Bikes</span></div>
+        <div class="cat-pill" onclick="navGo(document.querySelectorAll('.nitem')[3],'electronics')"><img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=80&h=80&fit=crop" alt="phones"><span>Electronics</span></div>
+        <div class="cat-pill" onclick="navGo(document.querySelectorAll('.nitem')[4],'fashion')"><img src="https://images.unsplash.com/photo-1445205170230-053b83016050?w=80&h=80&fit=crop" alt="fashion"><span>Fashion</span></div>
+        <div class="cat-pill" onclick="navGo(document.querySelectorAll('.nitem')[5],'beauty')"><img src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=80&h=80&fit=crop" alt="beauty"><span>Beauty</span></div>
+        <div class="cat-pill" onclick="navGo(document.querySelectorAll('.nitem')[6],'property')"><img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=80&h=80&fit=crop" alt="property"><span>Property</span></div>
+        <div class="cat-pill" onclick="navGo(document.querySelectorAll('.nitem')[7],'furniture')"><img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=80&h=80&fit=crop" alt="furniture"><span>Furniture</span></div>
+        <div class="cat-pill" onclick="navGo(document.querySelectorAll('.nitem')[9],'shop')"><img src="https://images.unsplash.com/photo-1542838132-92c53300491e?w=80&h=80&fit=crop" alt="grocery"><span>Grocery</span></div>
+        <div class="cat-pill" onclick="navGo(document.querySelectorAll('.nitem')[8],'jobs')"><img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=80&h=80&fit=crop" alt="jobs"><span>Jobs</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FLASH SALE -->
+  <div class="flash-section">
+    <div class="wrap">
+      <div class="flash-head">
+        <h2 class="sec-title">⚡ Flash Sale</h2>
+        <div class="flash-tag">Ends in: <div class="countdown"><div class="cd-block" id="cdH">08</div><span class="cd-sep">:</span><div class="cd-block" id="cdM">47</div><span class="cd-sep">:</span><div class="cd-block" id="cdS">23</div></div></div>
+        <a class="see-all" onclick="navGo(document.querySelectorAll('.nitem')[4],'fashion')">See All →</a>
+      </div>
+      <div class="grid-5">
+        <div class="pcard"><div class="pcard-img pcard-img-sm"><img src="https://tse3.mm.bing.net/th/id/OIP.BrN7P2YJY-Qd3UQMEGteCgHaHa?w=800&h=800&rs=1&pid=ImgDetMain&o=7&rm=3 alt="jacket"><span class="badge badge-sale">-35%</span><button class="pcard-wish" onclick="toggleWish(this)"><i class="far fa-heart"></i></button></div><div class="pcard-body"><div class="pcard-cat">Fashion · Men</div><div class="pcard-name">EliteShield Men Jacket</div><div class="pcard-price-wrap"><span class="pcard-price">Rs. 2,500</span><span class="pcard-old">Rs.3,200</span></div><div class="pcard-stars">★★★★☆ <span>(47)</span></div><button class="btn-lime" onclick="addToCart('EliteShield Jacket',8500,'https://images.unsplash.com/photo-1495707902641-75cac588d2e9?w=150&h=150&fit=crop')">Add to Cart</button></div></div>
+        <div class="pcard"><div class="pcard-img pcard-img-sm"><img src="https://images.unsplash.com/photo-1521369909029-2afed882baee?w=350&h=200&fit=crop" alt="hat"><span class="badge badge-sale">-25%</span><button class="pcard-wish" onclick="toggleWish(this)"><i class="far fa-heart"></i></button></div><div class="pcard-body"><div class="pcard-cat">Fashion · Accessories</div><div class="pcard-name">Premium Summer Hat</div><div class="pcard-price-wrap"><span class="pcard-price">Rs. 8,00</span><span class="pcard-old">Rs.1,250</span></div><div class="pcard-stars">★★★★★ <span>(112)</span></div><button class="btn-lime" onclick="addToCart('Summer Hat',2200,'https://images.unsplash.com/photo-1521369909029-2afed882baee?w=150&h=150&fit=crop')">Add to Cart</button></div></div>
+        <div class="pcard"><div class="pcard-img pcard-img-sm"><img src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=350&h=200&fit=crop" alt="bag"><span class="badge badge-sale">-40%</span><button class="pcard-wish" onclick="toggleWish(this)"><i class="far fa-heart"></i></button></div><div class="pcard-body"><div class="pcard-cat">Fashion · Bags</div><div class="pcard-name">Camera Shoulder Bag</div><div class="pcard-price-wrap"><span class="pcard-price">Rs. 4,800</span><span class="pcard-old">Rs.8,000</span></div><div class="pcard-stars">★★★★☆ <span>(68)</span></div><button class="btn-lime" onclick="addToCart('Shoulder Bag',4800,'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=150&h=150&fit=crop')">Add to Cart</button></div></div>
+        <div class="pcard"><div class="pcard-img pcard-img-sm"><img src="https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=350&h=200&fit=crop" alt="heels"><span class="badge badge-sale">-30%</span><button class="pcard-wish" onclick="toggleWish(this)"><i class="far fa-heart"></i></button></div><div class="pcard-body"><div class="pcard-cat">Fashion · Women</div><div class="pcard-name">Cloudy Peep Toe Heels</div><div class="pcard-price-wrap"><span class="pcard-price">Rs. 5,600</span><span class="pcard-old">Rs.8,000</span></div><div class="pcard-stars">★★★★★ <span>(89)</span></div><button class="btn-lime" onclick="addToCart('Peep Toe Heels',5600,'https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=150&h=150&fit=crop')">Add to Cart</button></div></div>
+        <div class="pcard"><div class="pcard-img pcard-img-sm"><img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=350&h=200&fit=crop" alt="nike"><span class="badge badge-sale">-20%</span><button class="pcard-wish" onclick="toggleWish(this)"><i class="far fa-heart"></i></button></div><div class="pcard-body"><div class="pcard-cat">Fashion · Shoes</div><div class="pcard-name">Nike Air Max 270</div><div class="pcard-price-wrap"><span class="pcard-price">Rs. 16,000</span><span class="pcard-old">Rs.20,000</span></div><div class="pcard-stars">★★★★★ <span>(203)</span></div><button class="btn-lime" onclick="addToCart('Nike Air Max 270',16000,'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=150&h=150&fit=crop')">Add to Cart</button></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROMO BANNERS -->
+  <div class="wrap">
+    <div class="promo-row">
+      <div class="promo-card" onclick="navGo(document.querySelectorAll('.nitem')[1],'cars')"><img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=700&h=260&fit=crop" alt="cars"><div class="promo-ov"></div><div class="promo-body"><h3>Verified Used Cars</h3><p>Inspected &amp; certified — best prices in Pakistan</p><button class="btn-promo">Browse 50K+ Cars →</button></div></div>
+      <div class="promo-card" onclick="navGo(document.querySelectorAll('.nitem')[9],'shop')"><img src="https://images.unsplash.com/photo-1542838132-92c53300491e?w=700&h=260&fit=crop" alt="grocery"><div class="promo-ov"></div><div class="promo-body"><h3>Fresh Grocery Deals</h3><p>Fresh vegetables, fruits, drinks &amp; daily essentials</p><button class="btn-promo">Order Grocery →</button></div></div>
+    </div>
+  </div>
+
+  <!-- FEATURED CARS -->
+  <div style="background:var(--off);padding:32px 0">
+    <div class="wrap">
+      <div class="sec-head"><h2 class="sec-title">🚗 Featured <span>Cars</span></h2><a class="see-all" onclick="navGo(document.querySelectorAll('.nitem')[1],'cars')">See All →</a></div>
+      <div class="grid-3">
+        <div class="car-card"><div class="car-img-wrap" style="position:relative;height:210px;overflow:hidden"><img src="https://cache2.pakwheels.com/ad_pictures/7409/toyota-corolla-altis-1-6-automatic-2020-74094989.jpg" alt="corolla" style="width:100%;height:100%;object-fit:cover"><span class="badge badge-feat" style="position:absolute;top:10px;left:10px">FEATURED</span></div><div class="car-body" style="padding:16px"><div class="car-make">Toyota · 2020</div><div class="car-name" style="font-family:var(--font-head);font-size:16px;font-weight:700;margin:3px 0 10px">Corolla Altis 1.6 GLi</div><div class="car-specs"><span class="car-spec"><i class="fas fa-tachometer-alt"></i> 45K km</span><span class="car-spec"><i class="fas fa-cog"></i> Auto</span><span class="car-spec"><i class="fas fa-gas-pump"></i> Petrol</span></div><div class="car-price">Rs. 42 Lac</div><div class="car-foot" style="display:flex;gap:8px"><button class="btn-outline" onclick="toggleWish(this)" style="flex:1">♡ Save</button><button class="btn-lime" onclick="toast('Contact opened','inf')" style="flex:1">📞 Contact</button></div></div></div>
+        <div class="car-card"><div class="car-img-wrap" style="position:relative;height:210px;overflow:hidden"><img src="https://carsforsalepk.com/wp-content/uploads/2024/07/Honda-Civic-RS-Turbo.webp" alt="civic" style="width:100%;height:100%;object-fit:cover"><span class="badge badge-new" style="position:absolute;top:10px;left:10px">NEW</span></div><div class="car-body" style="padding:16px"><div class="car-make">Honda · 2023</div><div class="car-name" style="font-family:var(--font-head);font-size:16px;font-weight:700;margin:3px 0 10px">Civic RS Turbo 1.5T</div><div class="car-specs"><span class="car-spec"><i class="fas fa-tachometer-alt"></i> 12K km</span><span class="car-spec"><i class="fas fa-cog"></i> Auto</span><span class="car-spec"><i class="fas fa-bolt"></i> Turbo</span></div><div class="car-price">Rs. 74 Lac</div><div class="car-foot" style="display:flex;gap:8px"><button class="btn-outline" onclick="toggleWish(this)" style="flex:1">♡ Save</button><button class="btn-lime" onclick="toast('Contact opened','inf')" style="flex:1">📞 Contact</button></div></div></div>
+        <div class="car-card"><div class="car-img-wrap" style="position:relative;height:210px;overflow:hidden"><img src="https://static.wixstatic.com/media/298a38_80c72536e4b741b6943f39ed561b6866~mv2.jpg/v1/fill/w_1280,h_712,al_c/298a38_80c72536e4b741b6943f39ed561b6866~mv2.jpg" alt="kia" style="width:100%;height:100%;object-fit:cover"><span class="badge badge-hot" style="position:absolute;top:10px;left:10px">HOT</span></div><div class="car-body" style="padding:16px"><div class="car-make">Kia · 2022</div><div class="car-name" style="font-family:var(--font-head);font-size:16px;font-weight:700;margin:3px 0 10px">Sportage AWD Alpha</div><div class="car-specs"><span class="car-spec"><i class="fas fa-tachometer-alt"></i> 32K km</span><span class="car-spec"><i class="fas fa-cog"></i> Auto</span><span class="car-spec"><i class="fas fa-road"></i> AWD</span></div><div class="car-price">Rs. 78 Lac</div><div class="car-foot" style="display:flex;gap:8px"><button class="btn-outline" onclick="toggleWish(this)" style="flex:1">♡ Save</button><button class="btn-lime" onclick="toast('Contact opened','inf')" style="flex:1">📞 Contact</button></div></div></div>
+      </div>
+    </div>
+  </div>
+<!-- QUOTE -->
+  <div class="quote-strip"><div class="wrap"><blockquote>"Let's Shop Beyond Boundaries"</blockquote></div></div>
+  <!-- STATS -->
+  <div class="stats-bar">
+    <div class="wrap">
+      <div class="stats-inner">
+        <div class="stat-item"><strong>800K+</strong><span>Active Listings</span></div>
+        <div class="stat-item"><strong>10+</strong><span>Happy Buyers</span></div>
+        <div class="stat-item"><strong>50+</strong><span>Daily New Ads</span></div>
+        <div class="stat-item"><strong>99.8%</strong><span>Secure &amp; Safe</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- END HOME -->
+
+<!-- Other pages injected by pages.js -->
+<div id="page-cars"        class="page-sec fade-up"></div>
+<div id="page-bikes"       class="page-sec fade-up"></div>
+<div id="page-electronics" class="page-sec fade-up"></div>
+<div id="page-fashion"     class="page-sec fade-up"></div>
+<div id="page-beauty"      class="page-sec fade-up"></div>
+<div id="page-property"    class="page-sec fade-up"></div>
+<div id="page-furniture"   class="page-sec fade-up"></div>
+<div id="page-jobs"        class="page-sec fade-up"></div>
+<div id="page-shop"        class="page-sec fade-up"></div>
+<div id="page-sell"        class="page-sec fade-up"></div>
+<div id="page-profile"     class="page-sec fade-up"></div>
+
+<!-- ════════════════════════════════════════════
+     FOOTER
+════════════════════════════════════════════ -->
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="flogo"><span class="fl-pak">Pak</span><span class="fl-baz">Bazaar</span></div>
+        <p class="fdesc">Pakistan's most trusted marketplace for buying and selling cars, bikes, electronics, fashion, grocery, property and more — all in one place.</p>
+        <div class="fsocial">
+          <a class="fsc" href="#"><i class="fab fa-facebook-f"></i></a>
+          <a class="fsc" href="#"><i class="fab fa-instagram"></i></a>
+          <a class="fsc" href="#"><i class="fab fa-youtube"></i></a>
+          <a class="fsc" href="#"><i class="fab fa-whatsapp"></i></a>
+        </div>
+      </div>
+      <div class="fcol"><h4>Marketplace</h4><ul><li><a href="#" onclick="navGo(null,'cars')">Cars</a></li><li><a href="#" onclick="navGo(null,'bikes')">Bikes</a></li><li><a href="#" onclick="navGo(null,'electronics')">Electronics</a></li><li><a href="#" onclick="navGo(null,'fashion')">Fashion</a></li><li><a href="#" onclick="navGo(null,'shop')">Grocery &amp; Shop</a></li><li><a href="#" onclick="navGo(null,'property')">Property</a></li></ul></div>
+      <div class="fcol"><h4>Quick Links</h4><ul><li><a href="#" onclick="navGo(null,'sell')">Post Free Ad</a></li><li><a href="#" onclick="openModal('loginModal')">Sign In</a></li><li><a href="#">Safety Tips</a></li><li><a href="#">Help Center</a></li><li><a href="#">Price Trends</a></li></ul></div>
+      <div class="fcol"><h4>Company</h4><ul><li><a href="#">About Us</a></li><li><a href="#">Careers</a></li><li><a href="#">Press</a></li><li><a href="#">Blog</a></li><li><a href="#">Advertise</a></li></ul></div>
+     
+    </div>
+    <div class="fbot">
+      <span>© 2026 PakBazaar. All rights reserved. Made by Salman Shahid</span>
+      <div><a href="#">Privacy Policy</a><a href="#">Terms of Use</a><a href="#">Cookies</a></div>
+    </div>
+  </div>
+</footer>
+
+<!-- ════════════════════════════════════════════
+     SCRIPTS
+════════════════════════════════════════════ -->
+<script src="js/main.js"></script>
+<script src="js/pages.js"></script>
+
+<!-- Extra inline helpers -->
+<script>
+// Password visibility toggle
+function togglePassVis(inputId, btn) {
+  const inp = document.getElementById(inputId);
+  if (!inp) return;
+  if (inp.type === 'password') {
+    inp.type = 'text';
+    btn.innerHTML = '<i class="fas fa-eye-slash"></i>';
+  } else {
+    inp.type = 'password';
+    btn.innerHTML = '<i class="fas fa-eye"></i>';
+  }
+}
+
+// Update header user avatar initials when user logs in
+const _origRefresh = window.refreshAuthUI;
+window.refreshAuthUI = function() {
+  if (_origRefresh) _origRefresh();
+  const user = getCurrentUser();
+  const avEl = document.getElementById('headerUserAv');
+  if (avEl && user) avEl.textContent = user.avatar || '?';
+  // Also re-render profile if on profile page
+  if (document.getElementById('profileContent')) renderProfileContent();
+};
+</script>
+</body>
+</html>
