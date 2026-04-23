@@ -737,44 +737,128 @@ function buildSellPage() {
       <div class="post-card">
         <div class="post-title">📢 Post a Free Ad</div>
         <div class="post-sub">Reach millions of buyers across Pakistan — 100% Free!</div>
-        <div class="fsec-label">Ad Category</div>
-        <div class="form-r3">
-          <div class="fgrp"><label>Category *</label><select class="finp" onchange="updateSubcategory(this)"><option value="">Select Category</option><option>Cars</option><option>Bikes</option><option>Electronics</option><option>Fashion</option><option>Property</option><option>Furniture</option><option>Jobs</option><option>Beauty</option><option>Grocery</option></select></div>
-          <div class="fgrp"><label>Sub-Category</label><select class="finp" id="subCatSel"><option value="">Select Sub-Category</option></select></div>
-          <div class="fgrp"><label>Condition *</label><select class="finp"><option>New</option><option>Used — Like New</option><option>Used — Good</option><option>Used — Fair</option></select></div>
+
+        <div class="sell-steps">
+          <div class="sell-step active" id="step-ind-1"><span>1</span> Category</div>
+          <div class="sell-step-line"></div>
+          <div class="sell-step" id="step-ind-2"><span>2</span> Details</div>
+          <div class="sell-step-line"></div>
+          <div class="sell-step" id="step-ind-3"><span>3</span> Photos</div>
+          <div class="sell-step-line"></div>
+          <div class="sell-step" id="step-ind-4"><span>4</span> Contact</div>
         </div>
-        <div class="fsec-label">Ad Details</div>
-        <div class="fgrp" style="margin-bottom:12px"><label>Ad Title *</label><input type="text" id="adTitle" class="finp" placeholder="e.g. Toyota Corolla 2020 Automatic White"></div>
-        <div class="fgrp" style="margin-bottom:12px"><label>Description *</label><textarea id="adDesc" class="finp" placeholder="Describe your item in detail..."></textarea></div>
-        <div class="form-r2" style="margin-bottom:12px">
-          <div class="fgrp"><label>Price (Rs.) *</label><input type="number" id="adPrice" class="finp" placeholder="e.g. 4200000"></div>
-          <div class="fgrp"><label>Price Negotiable?</label><select class="finp"><option>Yes, Negotiable</option><option>Fixed Price</option><option>Exchange Possible</option></select></div>
+
+        <!-- STEP 1 -->
+        <div id="sell-step-1" class="sell-step-body">
+          <div class="fsec-label" style="margin-top:0">Ad Category</div>
+          <div class="form-r3">
+            <div class="fgrp"><label>Category *</label><select class="finp" id="adCategory" onchange="updateSubcategory(this)"><option value="">Select Category</option><option>Cars</option><option>Bikes</option><option>Electronics</option><option>Fashion</option><option>Property</option><option>Furniture</option><option>Jobs</option><option>Beauty</option><option>Grocery</option></select></div>
+            <div class="fgrp"><label>Sub-Category</label><select class="finp" id="subCatSel"><option value="">Select Sub-Category</option></select></div>
+            <div class="fgrp"><label>Condition *</label><select class="finp" id="adCondition"><option value="">Select Condition</option><option>New</option><option>Used — Like New</option><option>Used — Good</option><option>Used — Fair</option></select></div>
+          </div>
+          <div style="margin-top:20px;text-align:right">
+            <button class="btn-lime" style="padding:11px 28px;border-radius:50px;font-weight:700;font-size:14px" onclick="sellNextStep(1)">Continue <i class="fas fa-arrow-right" style="margin-left:6px"></i></button>
+          </div>
         </div>
-        <div class="fsec-label">Photos</div>
-        <div class="upload-area" onclick="toast('Photo upload ready','inf')">
-          <i class="fas fa-cloud-upload-alt"></i>
-          <p><strong>Click to upload photos</strong> or drag &amp; drop</p>
-          <small>JPG, PNG · Max 10 photos · 5MB each</small>
+
+        <!-- STEP 2 -->
+        <div id="sell-step-2" class="sell-step-body" style="display:none">
+          <div class="fsec-label" style="margin-top:0">Ad Details</div>
+          <div class="fgrp" style="margin-bottom:14px"><label>Ad Title *</label><input type="text" id="adTitle" class="finp" placeholder="e.g. Toyota Corolla 2020 Automatic White"></div>
+          <div class="fgrp" style="margin-bottom:14px"><label>Description *</label><textarea id="adDesc" class="finp" rows="5" placeholder="Condition, features, reason for selling..."></textarea><span style="font-size:11px;color:var(--text3)" id="descCount">0 / 1000 characters</span></div>
+          <div class="form-r2" style="margin-bottom:14px">
+            <div class="fgrp"><label>Price (Rs.) *</label><input type="number" id="adPrice" class="finp" placeholder="e.g. 4200000" min="0"></div>
+            <div class="fgrp"><label>Price Type</label><select class="finp" id="adPriceType"><option>Negotiable</option><option>Fixed Price</option><option>Exchange Possible</option><option>Free / Gift</option></select></div>
+          </div>
+          <div style="display:flex;gap:10px;margin-top:20px">
+            <button class="btn-outline" style="padding:10px 22px;border-radius:50px" onclick="sellGoStep(1)"><i class="fas fa-arrow-left" style="margin-right:6px"></i> Back</button>
+            <button class="btn-lime" style="padding:11px 28px;border-radius:50px;font-weight:700;font-size:14px" onclick="sellNextStep(2)">Continue <i class="fas fa-arrow-right" style="margin-left:6px"></i></button>
+          </div>
         </div>
-        <div class="fsec-label">Location &amp; Contact</div>
-        <div class="form-r3" style="margin-bottom:12px">
-          <div class="fgrp"><label>Province *</label><select class="finp"><option>Punjab</option><option>Sindh</option><option>KPK</option><option>Balochistan</option></select></div>
-          <div class="fgrp"><label>City *</label><select class="finp"><option>Lahore</option><option>Karachi</option><option>Islamabad</option><option>Faisalabad</option><option>Multan</option><option>Peshawar</option></select></div>
-          <div class="fgrp"><label>Area</label><input type="text" class="finp" placeholder="e.g. DHA Phase 5"></div>
+
+        <!-- STEP 3 -->
+        <div id="sell-step-3" class="sell-step-body" style="display:none">
+          <div class="fsec-label" style="margin-top:0">Upload Photos</div>
+          <p style="font-size:13px;color:var(--text2);margin-bottom:16px"><i class="fas fa-info-circle" style="color:var(--lime-dark)"></i> Ads with photos get <strong>5x more views</strong>. Add up to 10 photos.</p>
+          <div class="photo-upload-zone" id="photoUploadZone" onclick="document.getElementById('photoFileInput').click()" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="handlePhotoDrop(event)">
+            <input type="file" id="photoFileInput" accept="image/*" multiple style="display:none" onchange="handlePhotoSelect(this)">
+            <div class="upload-zone-inner">
+              <i class="fas fa-cloud-upload-alt" style="font-size:36px;color:var(--lime-dark);display:block;margin-bottom:10px"></i>
+              <p style="font-size:15px;font-weight:600;margin-bottom:4px">Click or drag photos here</p>
+              <p style="font-size:13px;color:var(--text3)">JPG, PNG, WEBP · Max 5MB each · Up to 10 photos</p>
+            </div>
+          </div>
+          <div id="photoPreviewGrid" style="display:none;margin-top:16px">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+              <span style="font-size:13px;font-weight:600" id="photoCountLabel">0 photos selected</span>
+              <button onclick="clearAllPhotos()" style="background:none;border:none;color:var(--red);font-size:12px;cursor:pointer;font-weight:600"><i class="fas fa-trash"></i> Remove All</button>
+            </div>
+            <div id="photoGrid" style="display:grid;grid-template-columns:repeat(5,1fr);gap:10px"></div>
+            <button onclick="document.getElementById('photoFileInput').click()" style="margin-top:12px;background:var(--off);border:1.5px dashed var(--border);color:var(--text2);padding:10px 18px;border-radius:var(--r-sm);font-size:13px;font-weight:600;cursor:pointer;width:100%"><i class="fas fa-plus" style="margin-right:6px"></i>Add More Photos</button>
+          </div>
+          <div style="display:flex;gap:10px;margin-top:20px">
+            <button class="btn-outline" style="padding:10px 22px;border-radius:50px" onclick="sellGoStep(2)"><i class="fas fa-arrow-left" style="margin-right:6px"></i> Back</button>
+            <button class="btn-lime" style="padding:11px 28px;border-radius:50px;font-weight:700;font-size:14px" onclick="sellGoStep(4)">Continue <i class="fas fa-arrow-right" style="margin-left:6px"></i></button>
+            <button onclick="sellGoStep(4)" style="background:none;border:none;color:var(--text3);font-size:13px;cursor:pointer;padding:10px">Skip for now</button>
+          </div>
         </div>
-        <div class="form-r2">
-          <div class="fgrp"><label>Your Name *</label><input type="text" class="finp" placeholder="Full name"></div>
-          <div class="fgrp"><label>Phone *</label><input type="tel" class="finp" placeholder="03XX-XXXXXXX"></div>
+
+        <!-- STEP 4 -->
+        <div id="sell-step-4" class="sell-step-body" style="display:none">
+          <div class="fsec-label" style="margin-top:0">Location &amp; Contact</div>
+          <div class="form-r3" style="margin-bottom:14px">
+            <div class="fgrp"><label>Province *</label><select class="finp" id="adProvince"><option value="">Select Province</option><option>Punjab</option><option>Sindh</option><option>KPK</option><option>Balochistan</option><option>AJK</option></select></div>
+            <div class="fgrp"><label>City *</label><select class="finp" id="adCity"><option value="">Select City</option><option>Lahore</option><option>Karachi</option><option>Islamabad</option><option>Rawalpindi</option><option>Faisalabad</option><option>Multan</option><option>Peshawar</option><option>Quetta</option><option>Sialkot</option></select></div>
+            <div class="fgrp"><label>Area</label><input type="text" class="finp" id="adArea" placeholder="e.g. DHA Phase 5"></div>
+          </div>
+          <div class="form-r2" style="margin-bottom:14px">
+            <div class="fgrp"><label>Your Name *</label><input type="text" class="finp" id="adSellerName" placeholder="Full name"></div>
+            <div class="fgrp"><label>Phone *</label><input type="tel" class="finp" id="adSellerPhone" placeholder="03XX-XXXXXXX"></div>
+          </div>
+          <div class="fgrp" style="margin-bottom:14px"><label>Email (optional)</label><input type="email" class="finp" id="adSellerEmail" placeholder="your@email.com"></div>
+          <div style="background:rgba(195,231,3,0.08);border:1px solid rgba(195,231,3,0.25);border-radius:var(--r-sm);padding:12px;margin-bottom:18px;font-size:13px;color:var(--text2)"><i class="fas fa-shield-alt" style="color:var(--lime-dark);margin-right:6px"></i>Your contact info is only shown to serious buyers.</div>
+          <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+            <button class="btn-outline" style="padding:10px 22px;border-radius:50px" onclick="sellGoStep(3)"><i class="fas fa-arrow-left" style="margin-right:6px"></i> Back</button>
+            <button class="btn-submit-ad" onclick="submitAd()"><i class="fas fa-paper-plane" style="margin-right:8px"></i>Post Ad Now — Free!</button>
+          </div>
         </div>
-        <div style="display:flex;align-items:center;gap:16px;margin-top:20px">
-          <button class="btn-submit-ad" onclick="submitAd()"><i class="fas fa-paper-plane" style="margin-right:8px"></i>Post Ad Now</button>
-          <span style="font-size:13px;color:var(--text3)">Free · Visible to millions instantly</span>
+
+        <!-- SUCCESS -->
+        <div id="sell-success" style="display:none;text-align:center;padding:40px 20px">
+          <div style="font-size:64px;margin-bottom:16px">🎉</div>
+          <h2 style="font-family:var(--font-head);font-size:26px;font-weight:700;margin-bottom:8px;color:var(--lime-dark)">Ad Posted Successfully!</h2>
+          <p style="color:var(--text2);margin-bottom:8px;font-size:15px" id="successAdTitle"></p>
+          <p style="color:var(--text3);font-size:13px;margin-bottom:28px">Your ad is now live and visible to millions of buyers across Pakistan.</p>
+          <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+            <button class="btn-lime" style="padding:12px 24px;border-radius:50px;font-weight:700" onclick="viewMyAds()"><i class="fas fa-list-alt" style="margin-right:6px"></i>View My Ads</button>
+            <button class="btn-outline" style="padding:11px 24px;border-radius:50px" onclick="resetSellForm()"><i class="fas fa-plus" style="margin-right:6px"></i>Post Another Ad</button>
+          </div>
         </div>
+
       </div>
     </div>
   </div>`;
-}
 
+  /* description character counter */
+  const desc = document.getElementById('adDesc');
+  if (desc) desc.addEventListener('input', () => {
+    const cnt = document.getElementById('descCount');
+    if (cnt) cnt.textContent = desc.value.length + ' / 1000 characters';
+  });
+
+  /* pre-fill from logged-in user */
+  const user = getCurrentUser();
+  if (user) {
+    const n = document.getElementById('adSellerName');
+    const p = document.getElementById('adSellerPhone');
+    const e = document.getElementById('adSellerEmail');
+    if (n) n.value = (user.fname + ' ' + (user.lname || '')).trim();
+    if (p) p.value = user.phone || '';
+    if (e) e.value = user.email || '';
+  }
+}
+ 
+ 
 /* ================================================================
    PROFILE — shows real user data from localStorage
    ================================================================ */
@@ -783,12 +867,12 @@ function buildProfilePage() {
   el.innerHTML = '<div class="wrap" style="padding:48px 0;text-align:center"><div id="profileContent"></div></div>';
   renderProfileContent();
 }
-
+ 
 function renderProfileContent() {
   const user = getCurrentUser();
   const el = document.getElementById('profileContent');
   if (!el) return;
-
+ 
   if (!user) {
     el.innerHTML = `
     <div style="max-width:420px;margin:0 auto;text-align:center">
@@ -799,7 +883,10 @@ function renderProfileContent() {
     </div>`;
     return;
   }
-
+ 
+  const myAds    = getMyAds();
+  const myOrders = getMyOrders();
+ 
   el.innerHTML = `
   <div class="profile-layout">
     <div class="prof-sidebar">
@@ -810,37 +897,151 @@ function renderProfileContent() {
         <div class="prof-badge">✓ Verified Member</div>
       </div>
       <div class="prof-nav">
-        <a href="#" class="on"><i class="fas fa-list-alt"></i> My Ads (0)</a>
-        <a href="#" onclick="toast('Orders section','inf')"><i class="fas fa-shopping-bag"></i> My Orders (0)</a>
-        <a href="#" onclick="toast('Wishlist','inf')"><i class="fas fa-heart"></i> Wishlist (0)</a>
-        <a href="#" onclick="toast('Messages','inf')"><i class="fas fa-comment"></i> Messages (0)</a>
+        <a href="#" class="on" onclick="showProfileTab('myads',this)"><i class="fas fa-list-alt"></i> My Ads (${myAds.length})</a>
+        <a href="#" onclick="showProfileTab('orders',this)"><i class="fas fa-shopping-bag"></i> My Orders (${myOrders.length})</a>
+        <a href="#" onclick="showProfileTab('details',this)"><i class="fas fa-user-edit"></i> Account Details</a>
         <a href="#" onclick="openModal('settingsModal')"><i class="fas fa-cog"></i> Settings</a>
         <a href="#" onclick="doLogout()"><i class="fas fa-sign-out-alt"></i> Sign Out</a>
       </div>
     </div>
     <div>
-      <div class="prof-card">
-        <h3>Welcome, ${user.fname}! 👋</h3>
-        <p style="color:var(--text3);margin-bottom:24px">Your account is active. Start posting ads or browse products.</p>
+      <!-- STATS -->
+      <div class="prof-card" style="margin-bottom:16px">
         <div class="stat-cards">
-          <div class="stat-card" style="background:rgba(195,231,3,0.1);border-color:rgba(195,231,3,0.3)"><div class="stat-num">0</div><div class="stat-lbl">Active Ads</div></div>
-          <div class="stat-card" style="background:rgba(150,209,199,0.12);border-color:rgba(150,209,199,0.35)"><div class="stat-num">New</div><div class="stat-lbl">Member</div></div>
-          <div class="stat-card"><div class="stat-num">0</div><div class="stat-lbl">Orders</div></div>
-          <div class="stat-card"><div class="stat-num">0</div><div class="stat-lbl">Sold</div></div>
-        </div>
-        <div style="margin-top:24px;padding-top:24px;border-top:1px solid var(--border)">
-          <h3 style="margin-bottom:12px;font-size:16px">Account Details</h3>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;font-size:14px">
-            <div style="padding:12px;background:var(--off);border-radius:var(--r-sm)"><div style="color:var(--text3);font-size:11px;text-transform:uppercase;letter-spacing:0.5px">Full Name</div><div style="font-weight:600;margin-top:3px">${user.fname} ${user.lname || ''}</div></div>
-            <div style="padding:12px;background:var(--off);border-radius:var(--r-sm)"><div style="color:var(--text3);font-size:11px;text-transform:uppercase;letter-spacing:0.5px">Email</div><div style="font-weight:600;margin-top:3px">${user.email}</div></div>
-            <div style="padding:12px;background:var(--off);border-radius:var(--r-sm)"><div style="color:var(--text3);font-size:11px;text-transform:uppercase;letter-spacing:0.5px">Phone</div><div style="font-weight:600;margin-top:3px">${user.phone}</div></div>
-            <div style="padding:12px;background:var(--off);border-radius:var(--r-sm)"><div style="color:var(--text3);font-size:11px;text-transform:uppercase;letter-spacing:0.5px">Joined</div><div style="font-weight:600;margin-top:3px">${new Date(user.createdAt).toLocaleDateString('en-PK',{year:'numeric',month:'short',day:'numeric'})}</div></div>
+          <div class="stat-card" style="background:rgba(195,231,3,0.1);border-color:rgba(195,231,3,0.3)">
+            <div class="stat-num">${myAds.length}</div><div class="stat-lbl">Active Ads</div>
+          </div>
+          <div class="stat-card" style="background:rgba(150,209,199,0.12);border-color:rgba(150,209,199,0.35)">
+            <div class="stat-num">${myOrders.length}</div><div class="stat-lbl">Orders</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-num">${myAds.reduce((s,a)=>s+(a.views||0),0)}</div>
+            <div class="stat-lbl">Total Views</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-num">${myOrders.filter(o=>o.status==='Delivered').length}</div>
+            <div class="stat-lbl">Delivered</div>
           </div>
         </div>
-        <div style="margin-top:20px">
-          <button class="btn-lime" style="padding:12px 28px;border-radius:50px;font-weight:700" onclick="navGo(null,'sell')">+ Post Your First Ad</button>
+      </div>
+ 
+      <!-- TAB: MY ADS -->
+      <div id="tab-myads" class="prof-tab-panel prof-card">
+        <h3>My Posted Ads</h3>
+        ${myAds.length === 0 ? `
+        <div style="text-align:center;padding:40px 0;color:var(--text3)">
+          <div style="font-size:48px;margin-bottom:12px">📋</div>
+          <p style="margin-bottom:16px">You haven't posted any ads yet.</p>
+          <button class="btn-lime" style="padding:10px 24px;border-radius:50px;font-weight:700" onclick="navGo(null,'sell')">Post Your First Ad →</button>
+        </div>` : myAds.map(ad => `
+        <div class="ad-row">
+          <div class="ad-thumb">
+            ${ad.photos && ad.photos[0]
+              ? `<img src="${ad.photos[0]}" alt="${ad.title}" style="width:100%;height:100%;object-fit:cover">`
+              : `<div style="width:100%;height:100%;background:var(--off);display:flex;align-items:center;justify-content:center;font-size:22px">📦</div>`}
+          </div>
+          <div style="flex:1">
+            <div style="font-weight:700;font-size:14px">${ad.title}</div>
+            <div style="font-size:12px;color:var(--text3);margin-top:2px">${ad.category} · ${ad.city} · Posted ${formatDate(ad.postedAt)}</div>
+            <div style="font-weight:700;margin-top:4px;color:var(--lime-dark)">Rs. ${Number(ad.price).toLocaleString('en-PK')}</div>
+          </div>
+          <div style="text-align:center;padding:0 14px">
+            <div style="font-family:var(--font-head);font-size:20px;font-weight:800;color:var(--lime-dark)">${ad.views||0}</div>
+            <div style="font-size:11px;color:var(--text3)">Views</div>
+          </div>
+          <div style="display:flex;gap:7px">
+            <button style="padding:7px 14px;border-radius:50px;border:1.5px solid var(--border);background:transparent;cursor:pointer;font-size:12px;font-weight:600" onclick="toast('Edit ad feature coming soon!','inf')">Edit</button>
+            <button style="padding:7px 14px;border-radius:50px;border:1.5px solid #ffcdd2;background:transparent;cursor:pointer;font-size:12px;font-weight:600;color:#c00" onclick="deleteMyAd('${ad.id}')">Delete</button>
+          </div>
+        </div>`).join('')}
+      </div>
+ 
+      <!-- TAB: ORDERS -->
+      <div id="tab-orders" class="prof-tab-panel prof-card" style="display:none">
+        <h3>My Orders</h3>
+        ${myOrders.length === 0 ? `
+        <div style="text-align:center;padding:40px 0;color:var(--text3)">
+          <div style="font-size:48px;margin-bottom:12px">🛍️</div>
+          <p style="margin-bottom:16px">No orders yet. Start shopping!</p>
+          <button class="btn-lime" style="padding:10px 24px;border-radius:50px;font-weight:700" onclick="navGo(null,'shop')">Browse Shop →</button>
+        </div>` : myOrders.map(order => `
+        <div style="border:1.5px solid var(--border);border-radius:var(--r);padding:16px;margin-bottom:12px">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px">
+            <div>
+              <div style="font-family:var(--font-head);font-weight:700;font-size:15px">Order #${order.id}</div>
+              <div style="font-size:12px;color:var(--text3);margin-top:2px">${formatDate(order.date)} · ${order.items.length} item${order.items.length>1?'s':''}</div>
+            </div>
+            <span class="order-status-badge ${order.status.toLowerCase().replace(' ','-')}">${order.status}</span>
+          </div>
+          <div style="border-top:1px solid var(--border);padding-top:12px;margin-bottom:12px">
+            ${order.items.map(item=>`
+            <div style="display:flex;gap:10px;align-items:center;margin-bottom:8px">
+              <img src="${item.img}" style="width:44px;height:44px;object-fit:cover;border-radius:6px;flex-shrink:0">
+              <div style="flex:1;font-size:13px;font-weight:600">${item.name}</div>
+              <div style="font-size:12px;color:var(--text3)">x${item.qty}</div>
+              <div style="font-size:13px;font-weight:700">Rs. ${(item.price*item.qty).toLocaleString('en-PK')}</div>
+            </div>`).join('')}
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--border);padding-top:10px">
+            <div style="font-size:13px;color:var(--text2)">Payment: <strong>${order.paymentMethod}</strong></div>
+            <div style="font-family:var(--font-head);font-size:16px;font-weight:700">Total: Rs. ${order.total.toLocaleString('en-PK')}</div>
+          </div>
+        </div>`).join('')}
+      </div>
+ 
+      <!-- TAB: ACCOUNT DETAILS -->
+      <div id="tab-details" class="prof-tab-panel prof-card" style="display:none">
+        <h3>Account Details</h3>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px">
+          <div style="padding:14px;background:var(--off);border-radius:var(--r-sm)"><div style="color:var(--text3);font-size:11px;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px">Full Name</div><div style="font-weight:600">${user.fname} ${user.lname||''}</div></div>
+          <div style="padding:14px;background:var(--off);border-radius:var(--r-sm)"><div style="color:var(--text3);font-size:11px;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px">Email</div><div style="font-weight:600">${user.email}</div></div>
+          <div style="padding:14px;background:var(--off);border-radius:var(--r-sm)"><div style="color:var(--text3);font-size:11px;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px">Phone</div><div style="font-weight:600">${user.phone}</div></div>
+          <div style="padding:14px;background:var(--off);border-radius:var(--r-sm)"><div style="color:var(--text3);font-size:11px;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px">Joined</div><div style="font-weight:600">${new Date(user.createdAt).toLocaleDateString('en-PK',{year:'numeric',month:'long',day:'numeric'})}</div></div>
         </div>
+        <button class="btn-lime" style="padding:10px 24px;border-radius:50px;font-weight:700" onclick="toast('Edit profile feature coming soon!','inf')">
+          <i class="fas fa-user-edit" style="margin-right:6px"></i>Edit Profile
+        </button>
       </div>
     </div>
   </div>`;
+}
+ 
+function showProfileTab(tab, el) {
+  document.querySelectorAll('.prof-tab-panel').forEach(p => p.style.display = 'none');
+  document.querySelectorAll('.prof-nav a').forEach(a => a.classList.remove('on'));
+  const panel = document.getElementById('tab-' + tab);
+  if (panel) panel.style.display = 'block';
+  if (el) el.classList.add('on');
+}
+ 
+function deleteMyAd(id) {
+  const user = getCurrentUser();
+  if (!user) return;
+  const ads = getMyAds().filter(a => a.id !== id);
+  localStorage.setItem('pb_ads_' + user.id, JSON.stringify(ads));
+  toast('Ad deleted successfully');
+  renderProfileContent();
+}
+ 
+function getMyAds() {
+  const user = getCurrentUser();
+  if (!user) return [];
+  return JSON.parse(localStorage.getItem('pb_ads_' + user.id) || '[]');
+}
+ 
+function getMyOrders() {
+  const user = getCurrentUser();
+  if (!user) return [];
+  return JSON.parse(localStorage.getItem('pb_orders_' + user.id) || '[]');
+}
+ 
+function formatDate(iso) {
+  if (!iso) return '';
+  const d = new Date(iso);
+  return d.toLocaleDateString('en-PK', { day:'numeric', month:'short', year:'numeric' });
+}
+ 
+function viewMyAds() {
+  navGo(document.querySelectorAll('.nitem')[11], 'profile');
+  setTimeout(() => showProfileTab('myads', document.querySelector('.prof-nav a')), 200);
 }
