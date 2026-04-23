@@ -158,7 +158,7 @@
       <span>Total</span>
       <strong id="cartTotal">Rs. 0</strong>
     </div>
-    <button class="btn-checkout" onclick="toast('Checkout coming soon! 🎉','inf');toggleCart()">Proceed to Checkout →</button>
+    <button class="btn-checkout" onclick="openCheckout()">Proceed to Checkout →</button>
   </div>
 </div>
 
@@ -422,7 +422,7 @@
 ════════════════════════════════════════════ -->
 <script src="js/main.js"></script>
 <script src="js/pages.js"></script>
-
+ 
 <!-- Extra inline helpers -->
 <script>
 // Password visibility toggle
@@ -437,7 +437,7 @@ function togglePassVis(inputId, btn) {
     btn.innerHTML = '<i class="fas fa-eye"></i>';
   }
 }
-
+ 
 // Update header user avatar initials when user logs in
 const _origRefresh = window.refreshAuthUI;
 window.refreshAuthUI = function() {
@@ -451,3 +451,4 @@ window.refreshAuthUI = function() {
 </script>
 </body>
 </html>
+ 
